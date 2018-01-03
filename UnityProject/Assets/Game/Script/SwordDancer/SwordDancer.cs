@@ -10,13 +10,14 @@ public class SwordDancer : MonoBehaviour
     [SerializeField]
     protected float m_turnSpeed = 30;
 
-	[SerializeField]
-	protected float m_slowTimeScale = 0.1f;
+    [SerializeField]
+    protected float m_slowTimeScale = 0.1f;
 
-    [Header("Game Object Setting")]
+    [Header("Prefab Setting")]
     [SerializeField]
     protected Sword m_swordPrefab;
 
+    [Header("Game Object Setting")]
     [SerializeField]
     protected GameObject m_guideLine;
 
@@ -36,7 +37,17 @@ public class SwordDancer : MonoBehaviour
     #region Init Part
     private void Awake()
     {
-		SpeedManager.Instance().SetSpeedScale(m_slowTimeScale);
+        Init();
+    }
+
+    private void Init()
+    {
+        InitWorldSpeed();
+    }
+
+    private void InitWorldSpeed()
+    {
+        SpeedManager.Instance().SetSpeedScale(m_slowTimeScale);
     }
     #endregion
 
@@ -103,7 +114,7 @@ public class SwordDancer : MonoBehaviour
         m_aliveSword.gameObject.SetActive(true);
         m_aliveSword.transform.position = transform.position;
         m_aliveSword.transform.eulerAngles = transform.eulerAngles;
-		SpeedManager.Instance().SetSpeedScale(1f);
+        SpeedManager.Instance().SetSpeedScale(1f);
     }
 
     protected void SwordBack()
@@ -114,7 +125,7 @@ public class SwordDancer : MonoBehaviour
         m_aliveSword.gameObject.SetActive(false);
         transform.position = m_aliveSword.transform.position;
         transform.eulerAngles = m_aliveSword.transform.eulerAngles;
-		SpeedManager.Instance().SetSpeedScale(m_slowTimeScale);
+        SpeedManager.Instance().SetSpeedScale(m_slowTimeScale);
     }
     #endregion
 }

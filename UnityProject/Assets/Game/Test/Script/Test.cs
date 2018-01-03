@@ -17,7 +17,7 @@ public class Test : CMonoSingleton<Test> {
 		Init();
 	}
 	private void Init(){
-		
+
 	}
 	#endregion
 

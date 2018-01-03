@@ -20,7 +20,6 @@ public class Test2 : MonoBehaviour {
 
 	#region Update Part
 	private void Update () {
-		Debug.Log(Test.Instance().time);
 	}
 
 	private void FixedUpdate()

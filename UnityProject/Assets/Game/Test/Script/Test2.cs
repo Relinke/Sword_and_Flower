@@ -2,31 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test2 : MonoBehaviour {
-	#region Show In Inspector
-	#endregion
+public class Test2 : MonoBehaviour
+{
+    #region Show In Inspector
+    #endregion
 
-	#region Hide In Inspector
-	#endregion
+    #region Hide In Inspector
+    #endregion
 
-	#region Init Part
-	private void Awake(){
-		Init();
-	}
-	private void Init(){
-		
-	}
-	#endregion
+    #region Init Part
+    private void Awake()
+    {
+        Init();
+    }
+    private void Init()
+    {
 
-	#region Update Part
-	private void Update () {
-	}
+    }
+    #endregion
 
-	private void FixedUpdate()
-	{
+    #region Update Part
+    private void Update()
+    {
+    }
 
-	}
-	#endregion
+    private void FixedUpdate()
+    {
 
-	
+    }
+    #endregion
 }

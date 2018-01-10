@@ -28,7 +28,7 @@ public class GameManager : CGameManager
     protected float m_initStartImageAlpha = 1;
 
     [SerializeField]
-    protected float m_imageDisappearTime = 1;
+    protected float m_imageTransitionTime = 1;
     #endregion
 
     #region Hide In Inspector
@@ -55,19 +55,34 @@ public class GameManager : CGameManager
         switch (m_gameState)
         {
             case GameState.START:
+                StartUpdate();
                 break;
             case GameState.PREPARE_RUNNING:
+                PrepareRunningUpdate();
                 break;
             case GameState.END:
+                EndUpdate();
                 break;
             case GameState.RUNNING:
+                RunningUpdate();
                 break;
         }
     }
 
-    protected void PrepareRunning()
+    protected void StartUpdate()
     {
-        float alphaDelta = Time.deltaTime / m_imageDisappearTime;
+        if (Time.frameCount >= 5)
+        {
+            if (Input.anyKeyDown)
+            {
+                PrepareStartGame();
+            }
+        }
+    }
+
+    protected void PrepareRunningUpdate()
+    {
+        float alphaDelta = Time.deltaTime / m_imageTransitionTime;
         if (m_gameStartImage.color.a > 0)
         {
             SetImageAlpha(m_gameStartImage, m_gameStartImage.color.a - alphaDelta);
@@ -78,12 +93,24 @@ public class GameManager : CGameManager
         }
         else
         {
-            SwitchState(GameState.RUNNING);
+            SetImageAlpha(m_gameStartImage, 0);
+            SetImageAlpha(m_gameOverImage, 0);
+            StartGame();
         }
     }
 
     protected void EndUpdate()
     {
+        float alphaDelta = Time.deltaTime / m_imageTransitionTime;
+        if (m_gameOverImage.color.a < 1)
+        {
+            SetImageAlpha(m_gameOverImage, m_gameOverImage.color.a + alphaDelta);
+        }
+        else
+        {
+            SetImageAlpha(m_gameOverImage, 1);
+            StartGame();
+        }
     }
 
     protected void RunningUpdate()
@@ -104,15 +131,30 @@ public class GameManager : CGameManager
 
     protected void SetImageAlpha(Image image, float alpha)
     {
+        if (image.color.a == alpha)
+        {
+            return;
+        }
         Color color = image.color;
         color.a = alpha;
         image.color = color;
     }
 
+    public void PrepareStartGame()
+    {
+        SwitchState(GameState.PREPARE_RUNNING);
+    }
+
     public override void StartGame()
     {
         base.StartGame();
-        SwitchState(GameState.PREPARE_RUNNING);
+        SwitchState(GameState.RUNNING);
+    }
+
+    public override void EndGame()
+    {
+        base.EndGame();
+        SwitchState(GameState.END);
     }
     #endregion
 }

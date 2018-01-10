@@ -28,6 +28,11 @@ public class CGameManager : Common.CMonoSingleton<CGameManager>
             Destroy(gameObject);
             return;
         }
+        else
+        {
+            s_instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
     #endregion
 

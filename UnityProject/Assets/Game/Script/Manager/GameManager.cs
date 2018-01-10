@@ -26,6 +26,9 @@ public class GameManager : CGameManager
     [SerializeField]
     [Range(0, 1)]
     protected float m_initStartImageAlpha = 1;
+
+    [SerializeField]
+    protected float m_imageDisappearTime = 1;
     #endregion
 
     #region Hide In Inspector
@@ -33,13 +36,16 @@ public class GameManager : CGameManager
     #endregion
 
     #region Init Part
-    protected override void Init(){
+    protected override void Init()
+    {
         base.Init();
-        InitStartImage();
+        InitImage();
     }
 
-    protected void InitStartImage(){
+    protected void InitImage()
+    {
         SetImageAlpha(m_gameStartImage, m_initStartImageAlpha);
+        SetImageAlpha(m_gameOverImage, 0);
     }
     #endregion
 
@@ -50,6 +56,8 @@ public class GameManager : CGameManager
         {
             case GameState.START:
                 break;
+            case GameState.PREPARE_RUNNING:
+                break;
             case GameState.END:
                 break;
             case GameState.RUNNING:
@@ -57,8 +65,21 @@ public class GameManager : CGameManager
         }
     }
 
-    protected void StartUpdate(){
-
+    protected void PrepareRunning()
+    {
+        float alphaDelta = Time.deltaTime / m_imageDisappearTime;
+        if (m_gameStartImage.color.a > 0)
+        {
+            SetImageAlpha(m_gameStartImage, m_gameStartImage.color.a - alphaDelta);
+        }
+        else if (m_gameOverImage.color.a > 0)
+        {
+            SetImageAlpha(m_gameOverImage, m_gameOverImage.color.a - alphaDelta);
+        }
+        else
+        {
+            SwitchState(GameState.RUNNING);
+        }
     }
 
     protected void EndUpdate()
@@ -81,10 +102,17 @@ public class GameManager : CGameManager
         m_gameState = gameState;
     }
 
-    protected void SetImageAlpha(Image image, float alpha){
+    protected void SetImageAlpha(Image image, float alpha)
+    {
         Color color = image.color;
         color.a = alpha;
         image.color = color;
+    }
+
+    public override void StartGame()
+    {
+        base.StartGame();
+        SwitchState(GameState.PREPARE_RUNNING);
     }
     #endregion
 }

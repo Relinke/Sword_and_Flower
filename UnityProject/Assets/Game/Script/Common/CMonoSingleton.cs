@@ -27,18 +27,20 @@ namespace Common
                         }
                     }
                 }
-                if (s_instance == null){
+                if (s_instance == null)
+                {
                     GameObject targetObject = new GameObject();
-					targetObject.name = typeof(T).ToString();
-					DontDestroyOnLoad(targetObject);
+                    targetObject.name = typeof(T).ToString();
+                    DontDestroyOnLoad(targetObject);
                     s_instance = targetObject.AddComponent<T>();
                 }
             }
             return s_instance;
         }
 
-		protected void OnDestroy() {
-			s_instance = null;
-		}
+        protected void OnDestroy()
+        {
+            s_instance = null;
+        }
     }
 }

@@ -2,55 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CGameManager : Common.CMonoSingleton<CGameManager>
+namespace Common
 {
-    #region Hide In Inspector
-    public delegate void m_VoidDelegate();
-    public event m_VoidDelegate m_GameStartEvent;
-    public event m_VoidDelegate m_GameOverEvent;
-    #endregion
-
-    #region Init Part
-    protected virtual void Awake()
+    public class CGameManager : Common.CMonoSingleton<CGameManager>
     {
-        Init();
-    }
+        #region Hide In Inspector
+        public delegate void m_VoidDelegate();
+        public event m_VoidDelegate m_GameStartEvent;
+        public event m_VoidDelegate m_GameOverEvent;
+        #endregion
 
-    protected virtual void Init()
-    {
-        CheckInstance();
-    }
-
-    protected void CheckInstance()
-    {
-        if (GameManager.Instance() != this)
+        #region Init Part
+        protected virtual void Awake()
         {
-            Destroy(gameObject);
-            return;
+            Init();
         }
-        else
-        {
-            s_instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-    #endregion
 
-    #region Function Part
-    public virtual void StartGame()
-    {
-        if (m_GameStartEvent != null)
+        protected virtual void Init()
         {
-            m_GameStartEvent();
+            CheckInstance();
         }
-    }
 
-    public virtual void EndGame()
-    {
-        if (m_GameOverEvent != null)
+        protected void CheckInstance()
         {
-            m_GameOverEvent();
+            if (GameManager.Instance() != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            else
+            {
+                s_instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
         }
+        #endregion
+
+        #region Function Part
+        public virtual void StartGame()
+        {
+            if (m_GameStartEvent != null)
+            {
+                m_GameStartEvent();
+            }
+        }
+
+        public virtual void EndGame()
+        {
+            if (m_GameOverEvent != null)
+            {
+                m_GameOverEvent();
+            }
+        }
+        #endregion
     }
-    #endregion
 }

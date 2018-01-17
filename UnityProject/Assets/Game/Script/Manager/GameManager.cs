@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Common;
 
 public class GameManager : CGameManager
 {
@@ -44,8 +45,8 @@ public class GameManager : CGameManager
 
     protected void InitImage()
     {
-        SetImageAlpha(m_gameStartImage, m_initStartImageAlpha);
-        SetImageAlpha(m_gameOverImage, 0);
+        CCommonFunction.SetImageAlpha(m_gameStartImage, m_initStartImageAlpha);
+        CCommonFunction.SetImageAlpha(m_gameOverImage, 0);
     }
     #endregion
 
@@ -85,16 +86,16 @@ public class GameManager : CGameManager
         float alphaDelta = Time.deltaTime / m_imageTransitionTime;
         if (m_gameStartImage.color.a > 0)
         {
-            SetImageAlpha(m_gameStartImage, m_gameStartImage.color.a - alphaDelta);
+            CCommonFunction.SetImageAlpha(m_gameStartImage, m_gameStartImage.color.a - alphaDelta);
         }
         else if (m_gameOverImage.color.a > 0)
         {
-            SetImageAlpha(m_gameOverImage, m_gameOverImage.color.a - alphaDelta);
+            CCommonFunction.SetImageAlpha(m_gameOverImage, m_gameOverImage.color.a - alphaDelta);
         }
         else
         {
-            SetImageAlpha(m_gameStartImage, 0);
-            SetImageAlpha(m_gameOverImage, 0);
+            CCommonFunction.SetImageAlpha(m_gameStartImage, 0);
+            CCommonFunction.SetImageAlpha(m_gameOverImage, 0);
             StartGame();
         }
     }
@@ -104,11 +105,11 @@ public class GameManager : CGameManager
         float alphaDelta = Time.deltaTime / m_imageTransitionTime;
         if (m_gameOverImage.color.a < 1)
         {
-            SetImageAlpha(m_gameOverImage, m_gameOverImage.color.a + alphaDelta);
+            CCommonFunction.SetImageAlpha(m_gameOverImage, m_gameOverImage.color.a + alphaDelta);
         }
         else
         {
-            SetImageAlpha(m_gameOverImage, 1);
+            CCommonFunction.SetImageAlpha(m_gameOverImage, 1);
             StartGame();
         }
     }
@@ -127,17 +128,6 @@ public class GameManager : CGameManager
             return;
         }
         m_gameState = gameState;
-    }
-
-    protected void SetImageAlpha(Image image, float alpha)
-    {
-        if (image.color.a == alpha)
-        {
-            return;
-        }
-        Color color = image.color;
-        color.a = alpha;
-        image.color = color;
     }
 
     public void PrepareStartGame()

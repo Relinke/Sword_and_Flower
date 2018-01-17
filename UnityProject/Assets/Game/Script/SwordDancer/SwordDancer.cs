@@ -39,12 +39,6 @@ public class SwordDancer : MonoBehaviour
 
     private void Init()
     {
-        InitWorldSpeed();
-    }
-
-    private void InitWorldSpeed()
-    {
-        SpeedManager.Instance().ChangeTimeSpeed(SpeedManager.SpeedType.LOW);
     }
     #endregion
 
@@ -110,7 +104,7 @@ public class SwordDancer : MonoBehaviour
         m_aliveSword.gameObject.SetActive(true);
         m_aliveSword.transform.position = transform.position;
         m_aliveSword.transform.eulerAngles = transform.eulerAngles;
-        SpeedManager.Instance().ChangeTimeSpeed(SpeedManager.SpeedType.NORMAL);
+        SpeedManager.Instance().ChangeTimeSpeed(SpeedManager.SpeedState.NORMAL);
 
     }
 
@@ -121,7 +115,7 @@ public class SwordDancer : MonoBehaviour
         m_aliveSword.gameObject.SetActive(false);
         transform.position = m_aliveSword.transform.position;
         transform.eulerAngles = m_aliveSword.transform.eulerAngles;
-        SpeedManager.Instance().ChangeTimeSpeed(SpeedManager.SpeedType.LOW);
+        SpeedManager.Instance().ChangeTimeSpeed(SpeedManager.SpeedState.SLOW);
     }
     #endregion
 }

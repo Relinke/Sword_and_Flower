@@ -1,0 +1,13 @@
+# ignore release dir
+Release
+
+# ignore .vscode dir
+UnityProject/.vscode
+
+# ignore intermediate file
+UnityProject/Assembly-CSharp.csproj
+UnityProject/Doc/
+UnityProject/Library/
+UnityProject/UnityPackageManager/
+UnityProject/UnityProject.sln
+UnityProject/obj/
